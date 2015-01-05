@@ -1,0 +1,18 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="..\..\..\waunzip.cc" />
+    <ClCompile Include="..\..\..\zip\ioapi.c" />
+    <ClCompile Include="..\..\..\zip\unzip.c" />
+    <ClCompile Include="..\..\..\zip\utf8.c" />
+    <ClCompile Include="..\include\getopt.cc" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\waunzip.h" />
+    <ClInclude Include="..\..\..\zip\utf8.h" />
+    <ClInclude Include="..\..\..\zip\crypt.h" />
+    <ClInclude Include="..\..\..\zip\ioapi.h" />
+    <ClInclude Include="..\..\..\zip\unzip.h" />
+    <ClInclude Include="..\include\getopt.h" />
+  </ItemGroup>
+</Project>
