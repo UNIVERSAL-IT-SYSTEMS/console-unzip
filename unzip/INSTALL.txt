@@ -6,7 +6,17 @@ export CCFLAGS="-arch x86_64"
 export CXXFLAGS="-arch x86_64"
 export CFLAGS="-arch x86_64 -mmacosx-version-min=10.8"
 export LDFLAGS="-arch x86_64 -mmacosx-version-min=10.8 -L/usr/local/lib"
-export CPPFLAGS="-arch x86_64 -mmacosx-version-min=10.8 -I/usr/local/include"
+export CPPFLAGS="-arch x86_64 -mmacosx-version-min=10.8 -I/usr/local/include -I/usr/local/include/cairo"
+export PKG_CONFIG=/usr/local/bin/pkg-config
+export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+
+export CC="gcc"
+export CXX="g++"
+export CCFLAGS="-arch i386"
+export CXXFLAGS="-arch i386"
+export CFLAGS="-arch i386 -mmacosx-version-min=10.6"
+export LDFLAGS="-arch i386 -mmacosx-version-min=10.6 -L/usr/local/lib"
+export CPPFLAGS="-arch i386 -mmacosx-version-min=10.6 -I/usr/local/include -I/usr/local/include/cairo"
 export PKG_CONFIG=/usr/local/bin/pkg-config
 export PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
 
