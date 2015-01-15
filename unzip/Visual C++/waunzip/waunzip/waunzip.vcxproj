@@ -32,7 +32,6 @@
     <ClInclude Include="..\..\..\zip\crypt.h" />
     <ClInclude Include="..\..\..\zip\ioapi.h" />
     <ClInclude Include="..\..\..\zip\unzip.h" />
-    <ClInclude Include="..\..\..\zip\utf8.h" />
     <ClInclude Include="..\include\getopt.h" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
@@ -163,7 +162,7 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <AdditionalLibraryDirectories>$(SolutionDir)lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>zlib1.lib</AdditionalDependencies>
+      <AdditionalDependencies>zlib1.lib;shell32.lib</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

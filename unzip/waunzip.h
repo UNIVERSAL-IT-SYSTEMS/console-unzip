@@ -23,11 +23,14 @@
 #ifndef __APPLE__
 #define __WINDOWS__
 #include <string>
-int wchar_to_utf8(std::wstring &wstr, std::string &str);
-int utf8_to_wchar(std::string &str, std::wstring &wstr);
+#include <vector>
+#include <Shlobj.h>
 #define PATH_MAX 4096
+void unescape_path(std::string &path);
+void get_file_name(std::string &relativePath, std::string &filename);
+void create_parent_folder(std::string &path);
+void create_folder(std::string &path);
 #endif
 #endif
-
 
 #endif

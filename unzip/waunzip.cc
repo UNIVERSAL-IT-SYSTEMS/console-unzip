@@ -2,9 +2,11 @@
 
 #include <iostream>
 #include <fstream>
+#ifndef __WINDOWS__ 
 #include "boost/filesystem.hpp"
-
 namespace fs = boost::filesystem;
+namespace fs = boost::filesystem;
+#endif
 
 extern char *optarg;
 extern int optind, opterr;
@@ -61,7 +63,11 @@ int main(int argc, char *argv[])
     if(!input.length() || !output.length()){
         usage();
     }
-    
+
+#ifdef __WINDOWS__
+	unescape_path(input);
+#endif
+
     unzFile hUnzip = unzOpen64(input.c_str());
        
     unsigned int result = 0; 
@@ -69,20 +75,23 @@ int main(int argc, char *argv[])
     if(hUnzip){
         
         unz_file_info64 fileInfo;
-        std::vector<uint8_t> szConFilename(PATH_MAX);
-        std::string relativePath;
-        std::string absolutePath;
-        boost::system::error_code error;
+        std::vector<char> szConFilename(PATH_MAX);
+        std::string relativePath, filename, absolutePath;
         
         if(output.at(output.length()-1) != '/'){
            output += "/"; 
         }
-        
+
+#ifdef __WINDOWS__
+        create_parent_folder(output);
+#else
+		boost::system::error_code error;
         fs::path parent_path = (fs::path(output)).parent_path();
         
         if(!fs::is_directory(parent_path)){
             fs::create_directory(parent_path, error);
-        }
+        }        
+#endif        
         
         do{
             if(unzGetCurrentFileInfo64(hUnzip, &fileInfo, (char *)&szConFilename[0], PATH_MAX, NULL, 0, NULL, 0) != 0){
@@ -93,19 +102,19 @@ int main(int argc, char *argv[])
             
             relativePath = std::string((const char *)&szConFilename[0]);
             absolutePath = output + relativePath;
+            
+#ifdef __WINDOWS__
+            create_parent_folder(absolutePath);
+            get_file_name(relativePath, filename);
+#else
             parent_path = (fs::path(absolutePath)).parent_path();
-                        
+            
             if(!fs::is_directory(parent_path)){
                 fs::create_directory(parent_path, error);
-            }
-
-            std::string filename;
-#ifdef __WINDOWS__
-            std::wstring _filename(fs::path(relativePath).filename().c_str());
-            wchar_to_utf8(_filename, filename);
-#else
+            }   
+            
             filename = std::string(fs::path(relativePath).filename().c_str());
-#endif            
+#endif                
             
             if(!ignore_dot 
                || ((filename.at(0) != '.')
@@ -114,7 +123,12 @@ int main(int argc, char *argv[])
                 if(relativePath.length() > 1){
                     
                     if(relativePath.at(relativePath.length()-1) == '/'){
-                        fs::create_directory(absolutePath, error);
+                        
+#ifdef __WINDOWS__
+						create_folder(absolutePath);
+#else
+						fs::create_directory(absolutePath, error);
+#endif
                     }
                     
                     if(password.length()){
@@ -134,7 +148,7 @@ int main(int argc, char *argv[])
                     std::ofstream ofs(absolutePath.c_str(), std::ios::out|std::ios::binary);
                     
                     if(ofs.is_open()){
-                        std::vector<uint8_t> buf(BUFFER_SIZE);
+                        std::vector<char> buf(BUFFER_SIZE);
                         std::streamsize size;
                         
                         while ((size = unzReadCurrentFile(hUnzip, &buf[0], BUFFER_SIZE)) > 0)

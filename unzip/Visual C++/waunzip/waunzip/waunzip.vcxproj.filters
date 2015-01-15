@@ -9,7 +9,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\waunzip.h" />
-    <ClInclude Include="..\..\..\zip\utf8.h" />
     <ClInclude Include="..\..\..\zip\crypt.h" />
     <ClInclude Include="..\..\..\zip\ioapi.h" />
     <ClInclude Include="..\..\..\zip\unzip.h" />
